@@ -1,36 +1,5 @@
-# Императивное и декларативное программирование на практике. Семинар 02
+from random import randint
 
-## Задача №1
-__Условие__
-
-На вход подается число n.
-
-__Задача__
-
-Написать скрипт в любой парадигме, который выводит на экран таблицу умножения всех чисел от 1 до n.
-Обоснуйте выбор парадигм.
-
-Пример вывода:
-| | | | | |
-|-|-|-|-|-|
-|1| * |1| = |1|
-|1| * |2| = |2|
-|1| * |3| = |3|
-|1| * |4| = |4|
-|1| * |5| = |5|
-|1| * |6| = |6|
-|…|
-|1| * |9| = |9|
-
-
-## Задача №2
-
-Переписать алгоритм в процедурном стиле
-Структурное программирование
-
-Определение функции merge_sort, которая выполняет сортировку методом слияния.
-
-```python
 def merge_sort(arr):
 	if len(arr) > 1: # Проверка, что длина массива больше 1 (иначе сортировка не нужна).
 		mid = len(arr) // 2 # Вычисление середины массива.
@@ -52,19 +21,32 @@ def merge_sort(arr):
 				arr[k] = right_half[j]  # Если элемент из правой меньше, помещаем его в исходный массив.
 				j += 1
 			k += 1
+		
+		k = add_side_elements(i, k, arr, left_half)
+		add_side_elements(j, k, arr, right_half)
+		return k
 	
-		# Добавление оставшихся элементов из левой и правой половин (если такие есть).
-		while i < len(left_half):
-			arr[k] = left_half[i]
-			i += 1
-			k += 1
-	
-		while j < len(right_half):
-			arr[k] = right_half[j]
-			j += 1
-			k += 1
+# Добавление оставшихся элементов из левой и правой половин (если такие есть).
+def add_side_elements(i, k, arr, some_half):
+	while i < len(some_half):
+		arr[k] = some_half[i]
+		i += 1
+		k += 1
+	return k
+
+# Генерация массива случайных чисел (размер: size, диапазон 1–99)
+def random_list(lst_size):
+    lst = []
+    for i in range(lst_size):
+        lst.append(randint(1, 99))
+    return lst
+    
+lst_size = 15
+initial_list = random_list(lst_size)
+print(f'Initial_list: \t{initial_list}')
+merge_sort(initial_list)
+print(f'Merge sort: \t{initial_list}')
         
 my_array = [64, 34, 25, 12, 22, 11, 90] # Создание неотсортированного массива.
 merge_sort(my_array) # Вызов функции сортировки слиянием.
 print("Отсортированный массив (Merge Sort):", my_array) # Вывод отсортированного массива.
-```
